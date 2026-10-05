@@ -193,3 +193,677 @@
     width: min(560px, 92vw);
     color: var(--gold);
     font-family: var(--body-font);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: justify;
+    transform-origin: 50% 100%;
+    transform: translateX(-50%) rotateX(24deg);
+    animation: crawlUp 26s linear forwards;
+  }
+  .crawl h3 { font-family: var(--sw-font); font-weight: 400; text-align: center; font-size: 1.1rem; margin-bottom: 6px; letter-spacing: .1em; text-transform: lowercase; }
+  .crawl h2 { text-align: center; font-size: 2rem; margin-bottom: 26px; }
+  .crawl p { margin-bottom: 22px; }
+  @keyframes crawlUp { to { top: -160%; } }
+
+  .skip-row { text-align: center; margin-top: 18px; }
+
+  .intro-line {
+    color: var(--blue);
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 1.6;
+    animation: fadeInOut 3.2s ease forwards;
+  }
+  @keyframes fadeInOut { 0% { opacity: 0; } 20%,80% { opacity: 1; } 100% { opacity: 0; } }
+
+  /* ---------- When are you free ---------- */
+  .tile-pair { display: flex; gap: 14px; justify-content: center; margin-bottom: 20px; }
+  .tile-pair .tile { margin: 0; width: 76px; height: 76px; font-size: 2.3rem; }
+
+  .field { text-align: left; margin-bottom: 18px; }
+  .field label { display: block; font-weight: 700; margin-bottom: 8px; font-size: .95rem; }
+  .field input, .field select {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 14px;
+    border: 2px solid var(--border);
+    background: rgba(255,255,255,.05);
+    color: var(--text);
+    font-family: var(--body-font);
+    font-size: 1rem;
+    outline: none;
+    color-scheme: dark;
+    cursor: pointer;
+  }
+  .field input:focus, .field select:focus { border-color: var(--blue); box-shadow: 0 0 14px rgba(79,195,255,.4); }
+  .field select option { background: #0c1026; color: var(--text); }
+
+  /* ---------- Option grid ---------- */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+  .opt {
+    background: rgba(255,255,255,.05);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 6px 14px;
+    cursor: pointer;
+    font-family: var(--body-font); font-size: .95rem; font-weight: 600; color: var(--text);
+    transition: transform .15s, border-color .2s, box-shadow .2s, background .2s;
+    opacity: 0;
+    animation: dropIn .5s ease forwards;
+  }
+  .opt span { display: block; font-size: 1.9rem; margin-bottom: 8px; transition: transform .2s; }
+  .opt:hover { transform: translateY(-3px); border-color: var(--blue); }
+  .opt:hover span { transform: scale(1.15) rotate(-6deg); }
+  .opt.selected {
+    border-color: var(--gold);
+    background: rgba(255,232,31,.1);
+    box-shadow: 0 0 16px rgba(255,232,31,.45);
+  }
+
+  .grid .opt:nth-child(1) { animation-delay: .05s; }
+  .grid .opt:nth-child(2) { animation-delay: .12s; }
+  .grid .opt:nth-child(3) { animation-delay: .19s; }
+  .grid .opt:nth-child(4) { animation-delay: .26s; }
+  .grid .opt:nth-child(5) { animation-delay: .33s; }
+  .grid .opt:nth-child(6) { animation-delay: .40s; }
+  .grid .opt:nth-child(7) { animation-delay: .47s; }
+
+  @keyframes dropIn {
+    from { opacity: 0; transform: translateY(-14px) scale(.9); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  textarea {
+    display: none;
+    width: 100%; min-height: 90px;
+    margin-bottom: 18px; padding: 12px 14px;
+    border: 2px solid var(--border); border-radius: 14px;
+    background: rgba(255,255,255,.05);
+    font-family: var(--body-font); font-size: 1rem; color: var(--text);
+    resize: vertical; outline: none;
+  }
+  textarea:focus { border-color: var(--blue); box-shadow: 0 0 14px rgba(79,195,255,.4); }
+  textarea.show { display: block; animation: dropIn .3s ease both; }
+
+  .picked { min-height: 22px; color: var(--gold); font-size: .95rem; margin-bottom: 14px; }
+
+  /* ---------- Fee ---------- */
+  .fee-box {
+    border: 2px solid var(--border); border-radius: 16px;
+    padding: 18px; margin: 6px 0 22px; text-align: left;
+    background: rgba(255,255,255,.04);
+  }
+  .fee-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .fee-name { font-weight: 700; }
+  .fee-price { font-family: "Orbitron", sans-serif; font-size: 1.7rem; font-weight: 800; color: var(--green); text-shadow: 0 0 12px rgba(93,255,138,.6); }
+  .fee-note { text-align: center; font-size: .82rem; color: var(--muted); }
+
+  /* ---------- Receipt ---------- */
+  .receipt {
+    text-align: left;
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 4px 0 18px;
+    font-size: .92rem;
+    background: rgba(255,255,255,.03);
+  }
+  .receipt div { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; }
+  .receipt span:first-child { color: var(--muted); }
+  .receipt span:last-child { text-align: right; font-weight: 600; }
+
+  .confetti { position: fixed; top: -30px; pointer-events: none; z-index: 99; animation: fall linear forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: .2; } }
+
+  @media (max-width: 420px) {
+    .card { padding: 28px 18px; }
+    h1 { font-size: 1.3rem; }
+    h2 { font-size: 1.1rem; }
+    .btn { font-size: .85rem; }
+    .grid { gap: 9px; }
+    .opt { font-size: .82rem; padding: 14px 4px 12px; }
+    .crawl { font-size: 1.1rem; }
+  }
+</style>
+</head>
+
+<body>
+
+<canvas id="space"></canvas>
+
+<!-- 0. LOADING -->
+<section class="page active" id="loading">
+  <div class="card">
+    <div class="tile">🚀</div>
+    <h2>jumping to hyperspace...</h2>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <p class="sub" id="loadText">calculating coordinates... 0%</p>
+  </div>
+</section>
+
+<!-- 1. INTRO LINE -->
+<section class="page" id="intro">
+  <p class="intro-line">A short time ago, in a city<br>not so far away....</p>
+</section>
+
+<!-- 2. OPENING CRAWL -->
+<section class="page" id="crawl">
+  <div class="crawl-wrap">
+    <div class="crawl">
+      <h3>episode i</h3>
+      <h2>a new date</h2>
+      <p>It is a period of nervous energy. A brave engineer, armed with nothing but questionable jokes and a laptop, has built an entire website instead of sending one text.</p>
+      <p>His mission: to ask a very special someone a single, important question.</p>
+      <p>Somewhere under the Denver sky, the fate of the galaxy now rests on one button....</p>
+    </div>
+  </div>
+  <div class="skip-row">
+    <button class="btn saber-blue" onclick="show('ask')">continue</button>
+  </div>
+</section>
+
+<!-- 3. THE QUESTION -->
+<section class="page" id="ask">
+  <div class="card" style="--saber: var(--red)">
+    <div class="tile monkey">
+      <svg viewBox="0 0 100 100" width="100%" height="100%" aria-label="smiling monkey">
+        <circle cx="16" cy="48" r="13" fill="#8b5a2b"/>
+        <circle cx="16" cy="48" r="7"  fill="#f2c9a0"/>
+        <circle cx="84" cy="48" r="13" fill="#8b5a2b"/>
+        <circle cx="84" cy="48" r="7"  fill="#f2c9a0"/>
+        <circle cx="50" cy="50" r="34" fill="#8b5a2b"/>
+        <ellipse cx="50" cy="58" rx="25" ry="22" fill="#f2c9a0"/>
+        <ellipse cx="38" cy="42" rx="11" ry="12" fill="#f2c9a0"/>
+        <ellipse cx="62" cy="42" rx="11" ry="12" fill="#f2c9a0"/>
+        <circle class="eye" cx="39" cy="43" r="4" fill="#2b1a0e"/>
+        <circle class="eye" cx="61" cy="43" r="4" fill="#2b1a0e"/>
+        <circle cx="40.5" cy="41.5" r="1.3" fill="#fff"/>
+        <circle cx="62.5" cy="41.5" r="1.3" fill="#fff"/>
+        <ellipse cx="31" cy="58" rx="5" ry="3" fill="#ff8a8a" opacity=".55"/>
+        <ellipse cx="69" cy="58" rx="5" ry="3" fill="#ff8a8a" opacity=".55"/>
+        <ellipse cx="46" cy="55" rx="1.8" ry="1.3" fill="#5a3618"/>
+        <ellipse cx="54" cy="55" rx="1.8" ry="1.3" fill="#5a3618"/>
+        <path d="M36 62 Q50 78 64 62 Q50 70 36 62 Z" fill="#5a1f1f"/>
+        <path d="M42 67 Q50 72 58 67 Q50 69 42 67 Z" fill="#ff7a8a"/>
+      </svg>
+    </div>
+    <h1>will you go on a date with me?</h1>
+    <div class="row" id="askRow">
+      <button class="btn saber-red" onclick="show('yes')">yes ❤️</button>
+      <button class="btn saber-purple" id="noBtn">no</button>
+    </div>
+  </div>
+</section>
+
+<!-- 4. WAIT YOU SAID YES -->
+<section class="page" id="yes">
+  <div class="card" style="--saber: var(--green)">
+    <div class="tile">😳</div>
+    <h1>wait you actually said yes??</h1>
+    <p class="sub">I was so ready for you to say no 😅<br>the Force is strong with this one.</p>
+    <button class="btn saber-green" onclick="show('when')">okay okay!</button>
+  </div>
+</section>
+
+<!-- 5. WHEN ARE YOU FREE -->
+<section class="page" id="when">
+  <div class="card" style="--saber: var(--blue)">
+    <div class="tile-pair">
+      <div class="tile">📅</div>
+      <div class="tile">🕐</div>
+    </div>
+
+    <h2>so... when are you free?</h2>
+    <p class="sub">pick a day and time for our mission</p>
+
+    <div class="field">
+      <label for="dateInput">Pick a Day 📆</label>
+      <input type="date" id="dateInput">
+    </div>
+
+    <div class="field">
+      <label for="timeInput">What Time? ⏰</label>
+      <select id="timeInput">
+        <option value="">Select a time...</option>
+      </select>
+    </div>
+
+    <button class="btn saber-blue btn-wide" id="whenNext" disabled onclick="show('vibe')">set the date!</button>
+  </div>
+</section>
+
+<!-- 6. PICK A VIBE -->
+<section class="page" id="vibe">
+  <div class="card" style="--saber: var(--purple)">
+    <h2>what are we feeling?</h2>
+    <p class="sub">choose your mission</p>
+
+    <div class="grid" id="vibeGrid">
+      <button class="opt" data-value="Food"><span>🍽️</span>Food</button>
+      <button class="opt" data-value="Arcade"><span>🕹️</span>Arcade</button>
+      <button class="opt" data-value="Drive"><span>🚗</span>Drive</button>
+      <button class="opt" data-value="Golf"><span>⛳</span>Golf</button>
+      <button class="opt" data-value="Hike"><span>🥾</span>Hike</button>
+      <button class="opt" data-value="Other"><span>💭</span>Other</button>
+    </div>
+
+    <textarea id="otherText" placeholder="tell me what you're thinking... 😊"></textarea>
+
+    <button class="btn saber-purple btn-wide" id="vibeNext" disabled onclick="vibeContinue()">continue</button>
+    <button class="link" onclick="show('when')">go back</button>
+  </div>
+</section>
+
+<!-- 7. FOOD OPTIONS -->
+<section class="page" id="food">
+  <div class="card" style="--saber: var(--red)">
+    <h2>what are we eating?</h2>
+    <p class="sub">choose wisely, young padawan</p>
+
+    <div class="grid" id="foodGrid">
+      <button class="opt" data-value="Pizza" data-emoji="🍕"><span>🍕</span>Pizza</button>
+      <button class="opt" data-value="Burgers" data-emoji="🍔"><span>🍔</span>Burgers</button>
+      <button class="opt" data-value="Sushi" data-emoji="🍣"><span>🍣</span>Sushi</button>
+      <button class="opt" data-value="Ramen" data-emoji="🍜"><span>🍜</span>Ramen</button>
+      <button class="opt" data-value="American" data-emoji="🍟"><span>🍟</span>American</button>
+      <button class="opt" data-value="Indian" data-emoji="🍛"><span>🍛</span>Indian</button>
+      <button class="opt" data-value="Italian" data-emoji="🍝"><span>🍝</span>Italian</button>
+    </div>
+
+    <p class="picked" id="foodPicked"></p>
+
+    <button class="btn saber-red btn-wide" id="foodNext" disabled onclick="buildGlad(); show('glad')">continue</button>
+    <button class="link" onclick="show('vibe')">go back</button>
+  </div>
+</section>
+
+<!-- 8. GLAD YOU DIDN'T SAY NO -->
+<section class="page" id="glad">
+  <div class="card" style="--saber: var(--gold)">
+    <h1>glad you didn't say no.<span class="glad-line" id="gladLine"></span></h1>
+    <p class="glad-sub" id="gladWhen"></p>
+    <p class="ps">P.S. normal people text. I made a website. no big deal.</p>
+    <div class="stars-row">✦ ✧ ✦ ✧ ✦</div>
+    <button class="btn saber-blue btn-wide" onclick="show('fee')">ok i accept</button>
+  </div>
+</section>
+
+<!-- 9. ONE SMALL FEE -->
+<section class="page" id="fee">
+  <div class="card" style="--saber: var(--green)">
+    <div class="tile">💳</div>
+    <h2>one small fee</h2>
+    <p class="sub">to confirm your acceptance of this date, please complete the following transaction. totally normal. everyone in the galaxy does this.</p>
+
+    <div class="fee-box">
+      <div class="fee-top">
+        <span class="fee-name">Date Agreement™</span>
+        <span class="fee-price">$0</span>
+      </div>
+      <div class="fee-note">one-time fee • fully refundable • absolutely worth it</div>
+    </div>
+
+    <button class="btn saber-green btn-wide" id="payBtn" onclick="confirmDate()">pay $0 &amp; confirm</button>
+    <button class="link" onclick="show('glad')">go back</button>
+  </div>
+</section>
+
+<!-- 10. CONFIRMED -->
+<section class="page" id="done">
+  <div class="card" style="--saber: var(--gold)">
+    <div class="tile">✅</div>
+    <h1>payment received</h1>
+    <p>Date Agreement™ officially confirmed.</p>
+
+    <div class="receipt" id="receipt"></div>
+
+    <p class="sub">confirmation sent to mission control 📡<br>I have a good feeling about this ✨</p>
+    <div class="stars-row">✦ ✧ ✦ ✧ ✦</div>
+  </div>
+</section>
+
+<script>
+  /* ===== EMAIL SETTINGS ===== */
+  const WEB3FORMS_KEY = "PASTE-YOUR-ACCESS-KEY-HERE";   // from web3forms.com
+
+  const state = { date: "", time: "", activity: "", food: "", foodEmoji: "", other: "" };
+
+  /* ---------- Starfield + hyperspace ---------- */
+  const canvas = document.getElementById("space");
+  const ctx = canvas.getContext("2d");
+  let W, H, stars = [], speed = 0.4, targetSpeed = 0.4;
+
+  function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+  resize();
+  addEventListener("resize", resize);
+
+  for (let i = 0; i < 420; i++) {
+    stars.push({ x: (Math.random() - .5) * 2000, y: (Math.random() - .5) * 2000, z: Math.random() * 1000 });
+  }
+
+  function draw() {
+    speed += (targetSpeed - speed) * 0.05;
+    ctx.fillStyle = speed > 5 ? "rgba(3,4,11,.25)" : "rgba(3,4,11,.9)";
+    ctx.fillRect(0, 0, W, H);
+
+    for (const s of stars) {
+      const pz = s.z;
+      s.z -= speed;
+      if (s.z <= 1) { s.z = 1000; s.x = (Math.random() - .5) * 2000; s.y = (Math.random() - .5) * 2000; continue; }
+      const k = 300 / s.z, pk = 300 / pz;
+      const bright = 1 - s.z / 1000;
+      ctx.strokeStyle = speed > 5 ? `rgba(160,210,255,${bright})` : `rgba(255,255,255,${bright})`;
+      ctx.lineWidth = bright * 2;
+      ctx.beginPath();
+      ctx.moveTo(s.x * pk + W / 2, s.y * pk + H / 2);
+      ctx.lineTo(s.x * k + W / 2, s.y * k + H / 2);
+      ctx.stroke();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  function hyperspace(ms = 900) { targetSpeed = 28; setTimeout(() => targetSpeed = 0.4, ms); }
+
+  /* ---------- Navigation ---------- */
+  function show(id) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    scrollTo(0, 0);
+    hyperspace(500);
+    resetNoBtn();
+  }
+
+  /* ---------- Loading → intro → crawl ---------- */
+  addEventListener("load", () => {
+    const msgs = ["calculating coordinates...", "charging hyperdrive...", "avoiding asteroids...", "punch it!"];
+    let pct = 0;
+    const fill = document.getElementById("fill");
+    const label = document.getElementById("loadText");
+    targetSpeed = 6;
+
+    const timer = setInterval(() => {
+      pct = Math.min(100, pct + Math.floor(Math.random() * 7) + 3);
+      fill.style.width = pct + "%";
+      label.textContent = msgs[Math.min(3, Math.floor(pct / 26))] + " " + pct + "%";
+
+      if (pct === 100) {
+        clearInterval(timer);
+        hyperspace(1200);
+        setTimeout(() => {
+          show("intro");
+          setTimeout(() => show("crawl"), 3300);
+          setTimeout(() => {
+            if (document.getElementById("crawl").classList.contains("active")) show("ask");
+          }, 3300 + 24000);
+        }, 900);
+      }
+    }, 110);
+  });
+
+  /* ---------- Hopping "no" button ---------- */
+  const noBtn = document.getElementById("noBtn");
+  const askRow = document.getElementById("askRow");
+  const EDGE = 16;
+  const TRIGGER = 100;
+  const MIN_JUMP = 180;
+
+  function askIsActive() {
+    return document.getElementById("ask").classList.contains("active");
+  }
+
+  function detachNoBtn() {
+    if (noBtn.classList.contains("dodging")) return;
+    const r = noBtn.getBoundingClientRect();
+    document.body.appendChild(noBtn);
+    noBtn.classList.add("dodging");
+    noBtn.style.left = r.left + "px";
+    noBtn.style.top = r.top + "px";
+    void noBtn.offsetWidth;
+  }
+
+  function hop(px, py) {
+    detachNoBtn();
+    const bw = noBtn.offsetWidth, bh = noBtn.offsetHeight;
+    const maxX = innerWidth - bw - EDGE;
+    const maxY = innerHeight - bh - EDGE;
+
+    let x, y, tries = 0;
+    do {
+      x = EDGE + Math.random() * Math.max(0, maxX - EDGE);
+      y = EDGE + Math.random() * Math.max(0, maxY - EDGE);
+      tries++;
+    } while (Math.hypot(x + bw / 2 - px, y + bh / 2 - py) < MIN_JUMP && tries < 40);
+
+    noBtn.style.left = Math.min(Math.max(x, EDGE), maxX) + "px";
+    noBtn.style.top = Math.min(Math.max(y, EDGE), maxY) + "px";
+  }
+
+  function resetNoBtn() {
+    if (!noBtn.classList.contains("dodging")) return;
+    noBtn.classList.remove("dodging");
+    noBtn.style.left = "";
+    noBtn.style.top = "";
+    askRow.appendChild(noBtn);
+  }
+
+  document.addEventListener("mousemove", e => {
+    if (!askIsActive()) return;
+    const r = noBtn.getBoundingClientRect();
+    const dist = Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2));
+    if (dist < TRIGGER) hop(e.clientX, e.clientY);
+  });
+
+  noBtn.addEventListener("touchstart", e => {
+    e.preventDefault();
+    const t = e.touches[0];
+    hop(t.clientX, t.clientY);
+  }, { passive: false });
+
+  noBtn.addEventListener("click", e => {
+    e.preventDefault();
+    hop(e.clientX, e.clientY);
+  });
+
+  addEventListener("resize", () => {
+    if (!noBtn.classList.contains("dodging")) return;
+    const maxX = innerWidth - noBtn.offsetWidth - EDGE;
+    const maxY = innerHeight - noBtn.offsetHeight - EDGE;
+    noBtn.style.left = Math.min(parseFloat(noBtn.style.left), maxX) + "px";
+    noBtn.style.top = Math.min(parseFloat(noBtn.style.top), maxY) + "px";
+  });
+
+  /* ---------- Date + time (30-minute steps) ---------- */
+  const dateInput = document.getElementById("dateInput");
+  const timeInput = document.getElementById("timeInput");
+  const whenNext = document.getElementById("whenNext");
+
+  const today = new Date();
+  dateInput.min = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().split("T")[0];
+
+  for (let mins = 10 * 60; mins <= 21 * 60; mins += 30) {
+    const h24 = Math.floor(mins / 60), m = mins % 60;
+    const h12 = ((h24 + 11) % 12) + 1;
+    const label = `${h12}:${m === 0 ? "00" : "30"} ${h24 < 12 ? "AM" : "PM"}`;
+    const opt = document.createElement("option");
+    opt.value = label;
+    opt.textContent = label;
+    timeInput.appendChild(opt);
+  }
+
+  function checkWhen() {
+    state.date = dateInput.value;
+    state.time = timeInput.value;
+    whenNext.disabled = !(state.date && state.time);
+  }
+  dateInput.addEventListener("change", checkWhen);
+  timeInput.addEventListener("change", checkWhen);
+
+  function prettyDate(value) {
+    if (!value) return "";
+    return new Date(value + "T00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+  }
+
+  /* ---------- Vibe selection ---------- */
+  const otherBox = document.getElementById("otherText");
+  const vibeNext = document.getElementById("vibeNext");
+
+  document.querySelectorAll("#vibeGrid .opt").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#vibeGrid .opt").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      state.activity = btn.dataset.value;
+
+      if (state.activity === "Other") {
+        otherBox.classList.add("show");
+        otherBox.focus();
+        vibeNext.disabled = otherBox.value.trim() === "";
+      } else {
+        otherBox.classList.remove("show");
+        vibeNext.disabled = false;
+      }
+    });
+  });
+
+  otherBox.addEventListener("input", () => {
+    if (state.activity === "Other") vibeNext.disabled = otherBox.value.trim() === "";
+  });
+
+  function vibeContinue() {
+    if (state.activity === "Food") {
+      show("food");
+    } else {
+      state.food = "";
+      state.foodEmoji = "";
+      state.other = state.activity === "Other" ? otherBox.value.trim() : "";
+      buildGlad();
+      show("glad");
+    }
+  }
+
+  /* ---------- Food selection ---------- */
+  document.querySelectorAll("#foodGrid .opt").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#foodGrid .opt").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      state.food = btn.dataset.value;
+      state.foodEmoji = btn.dataset.emoji;
+      state.other = "";
+      document.getElementById("foodPicked").textContent = "excellent choice, the Force approves 😌";
+      document.getElementById("foodNext").disabled = false;
+    });
+  });
+
+  /* ---------- Personalized "glad" page ---------- */
+  function buildGlad() {
+    const lines = {
+      Arcade: "looks like I'm about to lose at the arcade 🕹️",
+      Drive:  "looks like we're going on a drive 🚗 you're the co-pilot",
+      Golf:   "looks like I'm about to get destroyed at golf ⛳",
+      Hike:   "looks like we're hiking 🥾 no rebel base required"
+    };
+
+    let line;
+    if (state.activity === "Food") {
+      line = `looks like we're getting ${state.food.toLowerCase()} ${state.foodEmoji}`;
+    } else if (state.activity === "Other") {
+      line = `your idea: "${state.other}" — I'm in 💭`;
+    } else {
+      line = lines[state.activity] || "looks like we've got plans ✨";
+    }
+
+    document.getElementById("gladLine").textContent = line;
+    document.getElementById("gladWhen").textContent =
+      `be ready by ${state.time} on ${prettyDate(state.date)} — I'm coming to get you 🚗`;
+  }
+
+  /* ---------- Email notification (Web3Forms) ---------- */
+  async function sendConfirmation() {
+    if (!WEB3FORMS_KEY || WEB3FORMS_KEY.includes("PASTE")) {
+      console.warn("⚠️ Web3Forms key not set. Paste your access key into WEB3FORMS_KEY.");
+      return;
+    }
+
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: "She said YES ❤️ Date Confirmed",
+        from_name: "Date Website",
+        Status: "CONFIRMED — paid $0",
+        Date: prettyDate(state.date),
+        Time: state.time,
+        Activity: state.activity,
+        "Food Choice": state.food || "N/A",
+        "Her Idea": state.other || "N/A",
+        "Confirmation Fee": "$0",
+        "Confirmed At": new Date().toLocaleString()
+      })
+    });
+
+    const data = await res.json().catch(() => ({}));
+    if (!data.success) throw new Error(data.message || "Email failed to send");
+    console.log("Confirmation email sent ✅");
+  }
+
+  function buildReceipt() {
+    const rows = [
+      ["Date", prettyDate(state.date)],
+      ["Time", state.time],
+      ["Mission", state.activity],
+    ];
+    if (state.food) rows.push(["Food", `${state.food} ${state.foodEmoji}`]);
+    if (state.other) rows.push(["Her idea", state.other]);
+    rows.push(["Amount paid", "$0.00"]);
+
+    const box = document.getElementById("receipt");
+    box.innerHTML = "";
+    rows.forEach(([k, v]) => {
+      const row = document.createElement("div");
+      const a = document.createElement("span");
+      const b = document.createElement("span");
+      a.textContent = k;
+      b.textContent = v;
+      row.append(a, b);
+      box.appendChild(row);
+    });
+  }
+
+  async function confirmDate() {
+    const btn = document.getElementById("payBtn");
+    btn.disabled = true;
+    btn.textContent = "processing $0...";
+
+    try {
+      await sendConfirmation();
+    } catch (e) {
+      console.error("Confirmation email failed:", e);
+    }
+
+    buildReceipt();
+    hyperspace(1500);
+    show("done");
+    celebrate();
+  }
+
+  /* ---------- Celebration ---------- */
+  function celebrate() {
+    const bits = ["✨", "⭐", "💫", "✦"];
+    for (let i = 0; i < 80; i++) {
+      const c = document.createElement("span");
+      c.className = "confetti";
+      c.textContent = bits[Math.floor(Math.random() * bits.length)];
+      c.style.color = "#ffe81f";
+      c.style.left = Math.random() * 100 + "vw";
+      c.style.fontSize = 14 + Math.random() * 18 + "px";
+      c.style.animationDuration = 2.5 + Math.random() * 2.5 + "s";
+      c.style.animationDelay = Math.random() * 0.6 + "s";
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 6000);
+    }
+  }
+</script>
+
+</body>
