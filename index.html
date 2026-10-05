@@ -119,6 +119,7 @@
   p { line-height: 1.6; margin-bottom: 18px; }
   .sub { color: var(--muted); font-size: 1rem; margin-bottom: 20px; }
   .ps { font-style: italic; font-size: .92rem; color: var(--muted); }
+  .greeting { font-size: 1.2rem; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
   .glad-line { display: block; margin-top: 10px; font-family: var(--body-font); font-size: 1.15rem; font-weight: 700; color: var(--text); text-transform: none; letter-spacing: 0; text-shadow: none; }
   .glad-sub { color: var(--blue); font-size: 1.05rem; font-weight: 600; margin-bottom: 14px; }
 
@@ -334,7 +335,7 @@
 <section class="page active" id="loading">
   <div class="card">
     <div class="tile">🚀</div>
-    <h2>jumping to hyperspace...</h2>
+    <h2>incoming transmission for <span class="her-name"></span>...</h2>
     <div class="bar"><div class="fill" id="fill"></div></div>
     <p class="sub" id="loadText">calculating coordinates... 0%</p>
   </div>
@@ -352,7 +353,7 @@
       <h3>episode i</h3>
       <h2>a new date</h2>
       <p>It is a period of nervous energy. A brave engineer, armed with nothing but questionable jokes and a laptop, has built an entire website instead of sending one text.</p>
-      <p>His mission: to ask a very special someone a single, important question.</p>
+      <p>His mission: to ask the lovely <span class="her-name"></span> a single, important question.</p>
       <p>Somewhere under the Denver sky, the fate of the galaxy now rests on one button....</p>
     </div>
   </div>
@@ -386,6 +387,7 @@
         <path d="M42 67 Q50 72 58 67 Q50 69 42 67 Z" fill="#ff7a8a"/>
       </svg>
     </div>
+    <p class="greeting">hey <span class="her-name"></span>,</p>
     <h1>will you go on a date with me?</h1>
     <div class="row" id="askRow">
       <button class="btn saber-red" onclick="show('yes')">yes ❤️</button>
@@ -522,10 +524,14 @@
 </section>
 
 <script>
-  /* ===== EMAIL SETTINGS ===== */
+  /* ===== SETTINGS ===== */
+  const HER_NAME = "Anne";                                   // change her name here
   const WEB3FORMS_KEY = "bda4e229-b1af-4745-9e47-479954f8e3ae";
 
   const state = { date: "", time: "", activity: "", food: "", foodEmoji: "", other: "" };
+
+  // Put her name everywhere it's needed
+  document.querySelectorAll(".her-name").forEach(el => el.textContent = HER_NAME);
 
   /* ---------- Starfield + hyperspace ---------- */
   const canvas = document.getElementById("space");
@@ -783,8 +789,9 @@
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify({
         access_key: WEB3FORMS_KEY,
-        subject: "She said YES ❤️ Date Confirmed",
+        subject: `${HER_NAME} said YES ❤️ Date Confirmed`,
         from_name: "Date Website",
+        Name: HER_NAME,
         Status: "CONFIRMED — paid $0",
         Date: prettyDate(state.date),
         Time: state.time,
@@ -803,6 +810,7 @@
 
   function buildReceipt() {
     const rows = [
+      ["Name", HER_NAME],
       ["Date", prettyDate(state.date)],
       ["Time", state.time],
       ["Mission", state.activity],
