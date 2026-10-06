@@ -116,6 +116,9 @@
   h1 { font-size: 1.55rem; margin-bottom: 16px; }
   h2 { font-size: 1.3rem; margin-bottom: 10px; }
 
+  /* Keep her name capitalized everywhere */
+  .her-name { text-transform: none; }
+
   p { line-height: 1.6; margin-bottom: 18px; }
   .sub { color: var(--muted); font-size: 1rem; margin-bottom: 20px; }
   .ps { font-style: italic; font-size: .92rem; color: var(--muted); }
@@ -266,7 +269,6 @@
   .grid .opt:nth-child(4) { animation-delay: .26s; }
   .grid .opt:nth-child(5) { animation-delay: .33s; }
   .grid .opt:nth-child(6) { animation-delay: .40s; }
-  .grid .opt:nth-child(7) { animation-delay: .47s; }
 
   @keyframes dropIn {
     from { opacity: 0; transform: translateY(-14px) scale(.9); }
@@ -462,12 +464,11 @@
     <p class="sub">choose wisely, young padawan</p>
 
     <div class="grid" id="foodGrid">
-      <button class="opt" data-value="Pizza" data-emoji="🍕"><span>🍕</span>Pizza</button>
-      <button class="opt" data-value="Burgers" data-emoji="🍔"><span>🍔</span>Burgers</button>
-      <button class="opt" data-value="Sushi" data-emoji="🍣"><span>🍣</span>Sushi</button>
-      <button class="opt" data-value="Ramen" data-emoji="🍜"><span>🍜</span>Ramen</button>
-      <button class="opt" data-value="American" data-emoji="🍟"><span>🍟</span>American</button>
+      <button class="opt" data-value="American" data-emoji="🍔"><span>🍔</span>American</button>
       <button class="opt" data-value="Indian" data-emoji="🍛"><span>🍛</span>Indian</button>
+      <button class="opt" data-value="Japanese" data-emoji="🍣"><span>🍣</span>Japanese</button>
+      <button class="opt" data-value="Chinese" data-emoji="🥡"><span>🥡</span>Chinese</button>
+      <button class="opt" data-value="Mexican" data-emoji="🌮"><span>🌮</span>Mexican</button>
       <button class="opt" data-value="Italian" data-emoji="🍝"><span>🍝</span>Italian</button>
     </div>
 
@@ -653,219 +654,4 @@
   }
 
   document.addEventListener("mousemove", e => {
-    if (!askIsActive()) return;
-    const r = noBtn.getBoundingClientRect();
-    const dist = Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2));
-    if (dist < TRIGGER) hop(e.clientX, e.clientY);
-  });
-
-  noBtn.addEventListener("touchstart", e => {
-    e.preventDefault();
-    const t = e.touches[0];
-    hop(t.clientX, t.clientY);
-  }, { passive: false });
-
-  noBtn.addEventListener("click", e => {
-    e.preventDefault();
-    hop(e.clientX, e.clientY);
-  });
-
-  addEventListener("resize", () => {
-    if (!noBtn.classList.contains("dodging")) return;
-    const maxX = innerWidth - noBtn.offsetWidth - EDGE;
-    const maxY = innerHeight - noBtn.offsetHeight - EDGE;
-    noBtn.style.left = Math.min(parseFloat(noBtn.style.left), maxX) + "px";
-    noBtn.style.top = Math.min(parseFloat(noBtn.style.top), maxY) + "px";
-  });
-
-  /* ---------- Date + time (30-minute steps) ---------- */
-  const dateInput = document.getElementById("dateInput");
-  const timeInput = document.getElementById("timeInput");
-  const whenNext = document.getElementById("whenNext");
-
-  const today = new Date();
-  dateInput.min = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().split("T")[0];
-
-  for (let mins = 10 * 60; mins <= 21 * 60; mins += 30) {
-    const h24 = Math.floor(mins / 60), m = mins % 60;
-    const h12 = ((h24 + 11) % 12) + 1;
-    const label = `${h12}:${m === 0 ? "00" : "30"} ${h24 < 12 ? "AM" : "PM"}`;
-    const opt = document.createElement("option");
-    opt.value = label;
-    opt.textContent = label;
-    timeInput.appendChild(opt);
-  }
-
-  function checkWhen() {
-    state.date = dateInput.value;
-    state.time = timeInput.value;
-    whenNext.disabled = !(state.date && state.time);
-  }
-  dateInput.addEventListener("change", checkWhen);
-  timeInput.addEventListener("change", checkWhen);
-
-  function prettyDate(value) {
-    if (!value) return "";
-    return new Date(value + "T00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
-  }
-
-  /* ---------- Vibe selection ---------- */
-  const otherBox = document.getElementById("otherText");
-  const vibeNext = document.getElementById("vibeNext");
-
-  document.querySelectorAll("#vibeGrid .opt").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll("#vibeGrid .opt").forEach(b => b.classList.remove("selected"));
-      btn.classList.add("selected");
-      state.activity = btn.dataset.value;
-
-      if (state.activity === "Other") {
-        otherBox.classList.add("show");
-        otherBox.focus();
-        vibeNext.disabled = otherBox.value.trim() === "";
-      } else {
-        otherBox.classList.remove("show");
-        vibeNext.disabled = false;
-      }
-    });
-  });
-
-  otherBox.addEventListener("input", () => {
-    if (state.activity === "Other") vibeNext.disabled = otherBox.value.trim() === "";
-  });
-
-  function vibeContinue() {
-    if (state.activity === "Food") {
-      show("food");
-    } else {
-      state.food = "";
-      state.foodEmoji = "";
-      state.other = state.activity === "Other" ? otherBox.value.trim() : "";
-      buildGlad();
-      show("glad");
-    }
-  }
-
-  /* ---------- Food selection ---------- */
-  document.querySelectorAll("#foodGrid .opt").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll("#foodGrid .opt").forEach(b => b.classList.remove("selected"));
-      btn.classList.add("selected");
-      state.food = btn.dataset.value;
-      state.foodEmoji = btn.dataset.emoji;
-      state.other = "";
-      document.getElementById("foodPicked").textContent = "excellent choice, the Force approves 😌";
-      document.getElementById("foodNext").disabled = false;
-    });
-  });
-
-  /* ---------- Personalized "glad" page ---------- */
-  function buildGlad() {
-    const lines = {
-      Arcade: "looks like I'm about to lose at the arcade 🕹️",
-      Drive:  "looks like we're going on a drive 🚗 you're the co-pilot",
-      Golf:   "looks like I'm about to get destroyed at golf ⛳",
-      Hike:   "looks like we're hiking 🥾 no rebel base required"
-    };
-
-    let line;
-    if (state.activity === "Food") {
-      line = `looks like we're getting ${state.food.toLowerCase()} ${state.foodEmoji}`;
-    } else if (state.activity === "Other") {
-      line = `your idea: "${state.other}" — I'm in 💭`;
-    } else {
-      line = lines[state.activity] || "looks like we've got plans ✨";
-    }
-
-    document.getElementById("gladLine").textContent = line;
-    document.getElementById("gladWhen").textContent =
-      `be ready by ${state.time} on ${prettyDate(state.date)} — I'm coming to get you 🚗`;
-  }
-
-  /* ---------- Email notification (Web3Forms) ---------- */
-  async function sendConfirmation() {
-    const res = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({
-        access_key: WEB3FORMS_KEY,
-        subject: `${HER_NAME} said YES ❤️ Date Confirmed`,
-        from_name: "Date Website",
-        Name: HER_NAME,
-        Status: "CONFIRMED — paid $0",
-        Date: prettyDate(state.date),
-        Time: state.time,
-        Activity: state.activity,
-        "Food Choice": state.food || "N/A",
-        "Her Idea": state.other || "N/A",
-        "Confirmation Fee": "$0",
-        "Confirmed At": new Date().toLocaleString()
-      })
-    });
-
-    const data = await res.json().catch(() => ({}));
-    if (!data.success) throw new Error(data.message || "Email failed to send");
-    console.log("Confirmation email sent ✅");
-  }
-
-  function buildReceipt() {
-    const rows = [
-      ["Name", HER_NAME],
-      ["Date", prettyDate(state.date)],
-      ["Time", state.time],
-      ["Mission", state.activity],
-    ];
-    if (state.food) rows.push(["Food", `${state.food} ${state.foodEmoji}`]);
-    if (state.other) rows.push(["Her idea", state.other]);
-    rows.push(["Amount paid", "$0.00"]);
-
-    const box = document.getElementById("receipt");
-    box.innerHTML = "";
-    rows.forEach(([k, v]) => {
-      const row = document.createElement("div");
-      const a = document.createElement("span");
-      const b = document.createElement("span");
-      a.textContent = k;
-      b.textContent = v;
-      row.append(a, b);
-      box.appendChild(row);
-    });
-  }
-
-  async function confirmDate() {
-    const btn = document.getElementById("payBtn");
-    btn.disabled = true;
-    btn.textContent = "processing $0...";
-
-    try {
-      await sendConfirmation();
-    } catch (e) {
-      console.error("Confirmation email failed:", e);
-    }
-
-    buildReceipt();
-    hyperspace(1500);
-    show("done");
-    celebrate();
-  }
-
-  /* ---------- Celebration ---------- */
-  function celebrate() {
-    const bits = ["✨", "⭐", "💫", "✦"];
-    for (let i = 0; i < 80; i++) {
-      const c = document.createElement("span");
-      c.className = "confetti";
-      c.textContent = bits[Math.floor(Math.random() * bits.length)];
-      c.style.color = "#ffe81f";
-      c.style.left = Math.random() * 100 + "vw";
-      c.style.fontSize = 14 + Math.random() * 18 + "px";
-      c.style.animationDuration = 2.5 + Math.random() * 2.5 + "s";
-      c.style.animationDelay = Math.random() * 0.6 + "s";
-      document.body.appendChild(c);
-      setTimeout(() => c.remove(), 6000);
-    }
-  }
-</script>
-
-</body>
-</html>
+    if (!ask
