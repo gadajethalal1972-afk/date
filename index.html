@@ -6,6 +6,10 @@
 <title>a transmission for you</title>
 
 <style>
+  /* Star Wars style fonts */
+  @import url("https://fonts.cdnfonts.com/css/star-jedi");
+  @import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&family=Orbitron:wght@600;800&display=swap");
+
   :root {
     --space: #03040b;
     --card: rgba(12, 16, 38, .82);
@@ -17,7 +21,7 @@
     --purple: #b36bff;
     --green: #5dff8a;
     --border: rgba(255, 255, 255, .14);
-    --sw-font: "Orbitron", sans-serif;
+    --sw-font: "Star Jedi", "Orbitron", sans-serif;
     --body-font: "Exo 2", "Segoe UI", sans-serif;
   }
 
@@ -38,6 +42,7 @@
 
   #space { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 
+  /* ---------- Pages ---------- */
   .page { position: relative; z-index: 2; display: none; width: 100%; max-width: 500px; }
   .page.active { display: block; animation: warpIn .7s cubic-bezier(.2,.9,.3,1.2) both; }
 
@@ -91,12 +96,14 @@
     66%     { box-shadow: 0 0 22px rgba(179,107,255,.45); }
   }
 
+  /* Smiling monkey */
   .tile.monkey { width: 120px; height: 120px; background: radial-gradient(circle, #2a2f5a, #12152e); padding: 6px; }
   .tile.monkey svg { animation: monkeyBob 2.2s ease-in-out infinite; }
   .tile.monkey .eye { transform-origin: center; transform-box: fill-box; animation: blink 4s infinite; }
   @keyframes monkeyBob { 50% { transform: translateY(-3px) rotate(-4deg); } }
   @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
 
+  /* ---------- Typography ---------- */
   h1, h2 {
     font-family: var(--sw-font);
     font-weight: 400;
@@ -109,6 +116,7 @@
   h1 { font-size: 1.55rem; margin-bottom: 16px; }
   h2 { font-size: 1.3rem; margin-bottom: 10px; }
 
+  /* Keep her name capitalized everywhere */
   .her-name { text-transform: none; }
 
   p { line-height: 1.6; margin-bottom: 18px; }
@@ -127,6 +135,7 @@
   }
   @keyframes twinkle { 50% { opacity: .5; } }
 
+  /* ---------- Lightsaber buttons ---------- */
   .btn {
     border: 0; cursor: pointer;
     font-family: var(--sw-font);
@@ -150,6 +159,7 @@
 
   .row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; min-height: 52px; }
 
+  /* Hopping "no" button */
   #noBtn { font-size: .85rem; padding: 11px 24px; }
   #noBtn.dodging {
     position: fixed;
@@ -165,9 +175,11 @@
   }
   .link:hover { color: var(--text); text-decoration: underline; }
 
+  /* ---------- Loading ---------- */
   .bar { height: 6px; background: rgba(255,255,255,.1); border-radius: 99px; overflow: hidden; margin: 18px 0 10px; }
   .fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--blue), var(--purple), var(--red)); box-shadow: 0 0 12px var(--blue); transition: width .12s linear; }
 
+  /* ---------- Opening crawl ---------- */
   .crawl-wrap {
     position: relative;
     height: 70vh;
@@ -207,6 +219,7 @@
   }
   @keyframes fadeInOut { 0% { opacity: 0; } 20%,80% { opacity: 1; } 100% { opacity: 0; } }
 
+  /* ---------- When are you free ---------- */
   .tile-pair { display: flex; gap: 14px; justify-content: center; margin-bottom: 20px; }
   .tile-pair .tile { margin: 0; width: 76px; height: 76px; font-size: 2.3rem; }
 
@@ -228,6 +241,7 @@
   .field input:focus, .field select:focus { border-color: var(--blue); box-shadow: 0 0 14px rgba(79,195,255,.4); }
   .field select option { background: #0c1026; color: var(--text); }
 
+  /* ---------- Option grid ---------- */
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
   .opt {
     background: rgba(255,255,255,.05);
@@ -275,6 +289,7 @@
 
   .picked { min-height: 22px; color: var(--gold); font-size: .95rem; margin-bottom: 14px; }
 
+  /* ---------- Fee ---------- */
   .fee-box {
     border: 2px solid var(--border); border-radius: 16px;
     padding: 18px; margin: 6px 0 22px; text-align: left;
@@ -285,6 +300,7 @@
   .fee-price { font-family: "Orbitron", sans-serif; font-size: 1.7rem; font-weight: 800; color: var(--green); text-shadow: 0 0 12px rgba(93,255,138,.6); }
   .fee-note { text-align: center; font-size: .82rem; color: var(--muted); }
 
+  /* ---------- Receipt ---------- */
   .receipt {
     text-align: left;
     border: 1px dashed var(--border);
@@ -377,7 +393,7 @@
     <h1>will you go on a date with me?</h1>
     <div class="row" id="askRow">
       <button class="btn saber-red" onclick="show('yes')">yes ❤️</button>
-      <button class="btn saber-purple" id="noBtn" type="button">no</button>
+      <button class="btn saber-purple" id="noBtn">no</button>
     </div>
   </div>
 </section>
@@ -426,12 +442,12 @@
     <p class="sub">choose your mission</p>
 
     <div class="grid" id="vibeGrid">
-      <button class="opt" type="button" data-value="Food"><span>🍽️</span>Food</button>
-      <button class="opt" type="button" data-value="Arcade"><span>🕹️</span>Arcade</button>
-      <button class="opt" type="button" data-value="Drive"><span>🚗</span>Drive</button>
-      <button class="opt" type="button" data-value="Golf"><span>⛳</span>Golf</button>
-      <button class="opt" type="button" data-value="Hike"><span>🥾</span>Hike</button>
-      <button class="opt" type="button" data-value="Other"><span>💭</span>Other</button>
+      <button class="opt" data-value="Food"><span>🍽️</span>Food</button>
+      <button class="opt" data-value="Arcade"><span>🕹️</span>Arcade</button>
+      <button class="opt" data-value="Drive"><span>🚗</span>Drive</button>
+      <button class="opt" data-value="Golf"><span>⛳</span>Golf</button>
+      <button class="opt" data-value="Hike"><span>🥾</span>Hike</button>
+      <button class="opt" data-value="Other"><span>💭</span>Other</button>
     </div>
 
     <textarea id="otherText" placeholder="tell me what you're thinking... 😊"></textarea>
@@ -448,12 +464,12 @@
     <p class="sub">choose wisely, young padawan</p>
 
     <div class="grid" id="foodGrid">
-      <button class="opt" type="button" data-value="American" data-emoji="🍔"><span>🍔</span>American</button>
-      <button class="opt" type="button" data-value="Indian" data-emoji="🍛"><span>🍛</span>Indian</button>
-      <button class="opt" type="button" data-value="Japanese" data-emoji="🍣"><span>🍣</span>Japanese</button>
-      <button class="opt" type="button" data-value="Chinese" data-emoji="🥡"><span>🥡</span>Chinese</button>
-      <button class="opt" type="button" data-value="Mexican" data-emoji="🌮"><span>🌮</span>Mexican</button>
-      <button class="opt" type="button" data-value="Italian" data-emoji="🍝"><span>🍝</span>Italian</button>
+      <button class="opt" data-value="American" data-emoji="🍔"><span>🍔</span>American</button>
+      <button class="opt" data-value="Indian" data-emoji="🍛"><span>🍛</span>Indian</button>
+      <button class="opt" data-value="Japanese" data-emoji="🍣"><span>🍣</span>Japanese</button>
+      <button class="opt" data-value="Chinese" data-emoji="🥡"><span>🥡</span>Chinese</button>
+      <button class="opt" data-value="Mexican" data-emoji="🌮"><span>🌮</span>Mexican</button>
+      <button class="opt" data-value="Italian" data-emoji="🍝"><span>🍝</span>Italian</button>
     </div>
 
     <p class="picked" id="foodPicked"></p>
@@ -510,21 +526,12 @@
 
 <script>
   /* ===== SETTINGS ===== */
-  const HER_NAME = "Anne";
+  const HER_NAME = "Anne";                                   // change her name here
   const WEB3FORMS_KEY = "bda4e229-b1af-4745-9e47-479954f8e3ae";
-
-  /* ---------- Fonts (loaded in the background) ---------- */
-  [
-    "https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&family=Orbitron:wght@600;800&display=swap"
-  ].forEach(function (url) {
-    const l = document.createElement("link");
-    l.rel = "stylesheet";
-    l.href = url;
-    document.head.appendChild(l);
-  });
 
   const state = { date: "", time: "", activity: "", food: "", foodEmoji: "", other: "" };
 
+  // Put her name everywhere it's needed
   document.querySelectorAll(".her-name").forEach(el => el.textContent = HER_NAME);
 
   /* ---------- Starfield + hyperspace ---------- */
@@ -562,19 +569,54 @@
   }
   draw();
 
-  let hyperTimer = null;
-  function hyperspace(ms = 900) {
-    targetSpeed = 28;
-    clearTimeout(hyperTimer);
-    hyperTimer = setTimeout(() => targetSpeed = 0.4, ms);
+  function hyperspace(ms = 900) { targetSpeed = 28; setTimeout(() => targetSpeed = 0.4, ms); }
+
+  /* ---------- Navigation ---------- */
+  function show(id) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    scrollTo(0, 0);
+    hyperspace(500);
+    resetNoBtn();
   }
+
+  /* ---------- Loading → intro → crawl ---------- */
+  addEventListener("load", () => {
+    const msgs = ["calculating coordinates...", "charging hyperdrive...", "avoiding asteroids...", "punch it!"];
+    let pct = 0;
+    const fill = document.getElementById("fill");
+    const label = document.getElementById("loadText");
+    targetSpeed = 6;
+
+    const timer = setInterval(() => {
+      pct = Math.min(100, pct + Math.floor(Math.random() * 7) + 3);
+      fill.style.width = pct + "%";
+      label.textContent = msgs[Math.min(3, Math.floor(pct / 26))] + " " + pct + "%";
+
+      if (pct === 100) {
+        clearInterval(timer);
+        hyperspace(1200);
+        setTimeout(() => {
+          show("intro");
+          setTimeout(() => show("crawl"), 3300);
+          setTimeout(() => {
+            if (document.getElementById("crawl").classList.contains("active")) show("ask");
+          }, 3300 + 24000);
+        }, 900);
+      }
+    }, 110);
+  });
 
   /* ---------- Hopping "no" button ---------- */
   const noBtn = document.getElementById("noBtn");
   const askRow = document.getElementById("askRow");
-  const EDGE = 16, TRIGGER = 100, MIN_JUMP = 180;
+  const EDGE = 16;
+  const TRIGGER = 100;
+  const MIN_JUMP = 180;
 
-  function askIsActive() { return document.getElementById("ask").classList.contains("active"); }
+  function askIsActive() {
+    return document.getElementById("ask").classList.contains("active");
+  }
 
   function detachNoBtn() {
     if (noBtn.classList.contains("dodging")) return;
@@ -589,16 +631,18 @@
   function hop(px, py) {
     detachNoBtn();
     const bw = noBtn.offsetWidth, bh = noBtn.offsetHeight;
-    const maxX = Math.max(EDGE, innerWidth - bw - EDGE);
-    const maxY = Math.max(EDGE, innerHeight - bh - EDGE);
+    const maxX = innerWidth - bw - EDGE;
+    const maxY = innerHeight - bh - EDGE;
+
     let x, y, tries = 0;
     do {
-      x = EDGE + Math.random() * (maxX - EDGE);
-      y = EDGE + Math.random() * (maxY - EDGE);
+      x = EDGE + Math.random() * Math.max(0, maxX - EDGE);
+      y = EDGE + Math.random() * Math.max(0, maxY - EDGE);
       tries++;
     } while (Math.hypot(x + bw / 2 - px, y + bh / 2 - py) < MIN_JUMP && tries < 40);
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+
+    noBtn.style.left = Math.min(Math.max(x, EDGE), maxX) + "px";
+    noBtn.style.top = Math.min(Math.max(y, EDGE), maxY) + "px";
   }
 
   function resetNoBtn() {
@@ -631,45 +675,9 @@
     if (!noBtn.classList.contains("dodging")) return;
     const maxX = innerWidth - noBtn.offsetWidth - EDGE;
     const maxY = innerHeight - noBtn.offsetHeight - EDGE;
-    noBtn.style.left = Math.max(EDGE, Math.min(parseFloat(noBtn.style.left), maxX)) + "px";
-    noBtn.style.top = Math.max(EDGE, Math.min(parseFloat(noBtn.style.top), maxY)) + "px";
+    noBtn.style.left = Math.min(parseFloat(noBtn.style.left), maxX) + "px";
+    noBtn.style.top = Math.min(parseFloat(noBtn.style.top), maxY) + "px";
   });
-
-  /* ---------- Navigation ---------- */
-  let introTimers = [];
-  function show(id) {
-    if (id !== "intro" && id !== "crawl") { introTimers.forEach(clearTimeout); introTimers = []; }
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
-    scrollTo(0, 0);
-    hyperspace(500);
-    resetNoBtn();
-  }
-
-  /* ---------- Loading → intro → crawl ---------- */
-  (function startLoading() {
-    const msgs = ["calculating coordinates...", "charging hyperdrive...", "avoiding asteroids...", "punch it!"];
-    let pct = 0;
-    const fill = document.getElementById("fill");
-    const label = document.getElementById("loadText");
-    targetSpeed = 6;
-
-    const timer = setInterval(() => {
-      pct = Math.min(100, pct + Math.floor(Math.random() * 7) + 3);
-      fill.style.width = pct + "%";
-      label.textContent = msgs[Math.min(3, Math.floor(pct / 26))] + " " + pct + "%";
-
-      if (pct === 100) {
-        clearInterval(timer);
-        hyperspace(1200);
-        introTimers.push(setTimeout(() => {
-          show("intro");
-          introTimers.push(setTimeout(() => show("crawl"), 3300));
-          introTimers.push(setTimeout(() => show("ask"), 3300 + 24000));
-        }, 900));
-      }
-    }, 110);
-  })();
 
   /* ---------- Date + time (30-minute steps) ---------- */
   const dateInput = document.getElementById("dateInput");
@@ -694,10 +702,8 @@
     state.time = timeInput.value;
     whenNext.disabled = !(state.date && state.time);
   }
-  ["change", "input"].forEach(ev => {
-    dateInput.addEventListener(ev, checkWhen);
-    timeInput.addEventListener(ev, checkWhen);
-  });
+  dateInput.addEventListener("change", checkWhen);
+  timeInput.addEventListener("change", checkWhen);
 
   function prettyDate(value) {
     if (!value) return "";
@@ -779,12 +785,8 @@
 
   /* ---------- Email notification (Web3Forms) ---------- */
   async function sendConfirmation() {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000);
-
     const res = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      signal: controller.signal,
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify({
         access_key: WEB3FORMS_KEY,
@@ -801,7 +803,6 @@
         "Confirmed At": new Date().toLocaleString()
       })
     });
-    clearTimeout(timeout);
 
     const data = await res.json().catch(() => ({}));
     if (!data.success) throw new Error(data.message || "Email failed to send");
@@ -834,7 +835,6 @@
 
   async function confirmDate() {
     const btn = document.getElementById("payBtn");
-    if (btn.disabled) return;
     btn.disabled = true;
     btn.textContent = "processing $0...";
 
